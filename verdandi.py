@@ -85,7 +85,13 @@ def get_schedule(schedule_id):
 
     schedule = dict(db_result)
     add_events_to_schedule(schedule)
-    return jsonify(schedule)
+    if request.headers.get('accept') == 'application/json':
+        return jsonify(schedule)
+    else:
+        return render_template(
+            'schedule.html',
+            schedule=schedule
+        )
 
 
 def delete_schedule(schedule_id):
