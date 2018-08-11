@@ -1,14 +1,14 @@
 from db import get_db, close_db
 
-from flask import Flask, request, jsonify, abort
+from flask import Flask, request, jsonify, abort, render_template
 
 
 app = Flask(__name__)
 app.config['DATABASE'] = 'database'
 
 @app.route("/")
-def hello():
-    return "Hello World!"
+def index():
+    return render_template('index.html')
 
 
 def add_events_to_schedule(schedule):
