@@ -20,12 +20,14 @@ def add_events_to_schedule(schedule):
     schedule['event_ids'] = [event['id'] for event in db_result]
 
 
-@app.route('/schedules/', methods=['GET', 'POST'])
+@app.route('/schedules/', methods=['GET', 'POST', 'DELETE'])
 def manage_schedules():
     if request.method == 'GET':
         return get_schedules()
     elif request.method == 'POST':
         return post_schedule()
+    elif request.method == 'DELETE':
+        return delete_schedules()
 
 
 def get_schedules():
@@ -47,8 +49,22 @@ def post_schedule():
     return 'Schedule with name ' + name + ' created'
 
 
-@app.route('/schedules/<int:schedule_id>', methods=['GET'])
+def delete_schedules():
+    db = get_db()
+    db.execute('DELETE FROM schedules')
+    db.execute('DELETE FROM events')
+    db.commit()
+    close_db()
+    return ('', 204)
+
+@app.route('/schedules/<int:schedule_id>', methods=['GET', 'DELETE'])
 def manage_schedule(schedule_id):
+    if request.method == 'GET':
+        return get_schedule(schedule_id)
+    elif request.method == 'DELETE':
+        return delete_schedule(schedule_id)
+
+def get_schedule(schedule_id):
     db = get_db()
     db_result = db.execute(
         'SELECT * FROM schedules WHERE id = ?',
@@ -63,13 +79,29 @@ def manage_schedule(schedule_id):
     return jsonify(schedule)
 
 
-@app.route('/events/', methods=['GET', 'POST'])
+def delete_schedule(schedule_id):
+    db = get_db()
+    db.execute(
+        'DELETE FROM schedules WHERE id = ?',
+        (schedule_id,)
+    )
+    db.execute(
+        'DELETE FROM events WHERE schedule_id = ?',
+        (schedule_id,)
+    )
+    db.commit()
+    close_db()
+    return ('', 204)
+
+
+@app.route('/events/', methods=['GET', 'POST', 'DELETE'])
 def manage_events():
     if request.method == 'GET':
         return get_events()
     elif request.method == 'POST':
         return post_event()
-
+    elif request.method == 'DELETE':
+        return delete_events()
 
 def get_events():
     db = get_db()
@@ -83,7 +115,7 @@ def post_event():
     request_data = request.get_json(force=True)
 
     name = request_data['name']
-    schedule = request_data['schedule']
+    schedule = request_data['schedule_id']
 
     db = get_db()
     events = db.execute(
@@ -97,8 +129,22 @@ def post_event():
     return 'Event with name ' + name + ' created'
 
 
-@app.route('/events/<int:event_id>', methods=['GET'])
+def delete_events():
+    db = get_db()
+    db.execute('DELETE FROM events')
+    db.commit()
+    return ('',204)
+
+
+@app.route('/events/<int:event_id>', methods=['GET', 'DELETE'])
 def manage_event(event_id):
+    if request.method == 'GET':
+        return get_event(event_id)
+    elif request.method == 'DELETE':
+        return delete_event(event_id)
+
+
+def get_event(event_id):
     db = get_db()
     db_result = db.execute(
         'SELECT * FROM events WHERE id = ?',
@@ -111,3 +157,14 @@ def manage_event(event_id):
 
     close_db()
     return jsonify(dict(event))
+
+
+def delete_event(event_id):
+    db = get_db()
+    db.execute(
+        'DELETE FROM events WHERE id = ?',
+        (event_id,)
+    )
+    db.commit()
+    close_db()
+    return ('', 204)
