@@ -14,10 +14,10 @@ def index():
 def add_events_to_schedule(schedule):
     db = get_db()
     db_result = db.execute(
-            'SELECT id FROM events WHERE schedule_id = ?',
-            (schedule['id'],)
-        )
-    schedule['event_ids'] = [event['id'] for event in db_result]
+        'SELECT * FROM events WHERE schedule_id = ?',
+        (schedule['id'],)
+    )
+    schedule['events'] = [dict(event) for event in db_result]
 
 
 @app.route('/schedules/', methods=['GET', 'POST', 'DELETE'])
