@@ -37,7 +37,14 @@ def get_schedules():
     for schedule in schedules:
         add_events_to_schedule(schedule)
     close_db()
-    return jsonify(schedules)
+
+    if request.headers.get('accept') == 'application/json':
+        return jsonify(schedules)
+    else:
+        return render_template(
+            'schedules.html',
+            schedules=schedules
+        )
 
 
 def post_schedule():
