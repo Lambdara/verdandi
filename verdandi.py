@@ -64,12 +64,14 @@ def delete_schedules():
     close_db()
     return ('', 204)
 
+
 @app.route('/schedules/<int:schedule_id>', methods=['GET', 'DELETE'])
 def manage_schedule(schedule_id):
     if request.method == 'GET':
         return get_schedule(schedule_id)
     elif request.method == 'DELETE':
         return delete_schedule(schedule_id)
+
 
 def get_schedule(schedule_id):
     db = get_db()
