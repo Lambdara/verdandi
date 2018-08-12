@@ -15,7 +15,7 @@ def add_events_to_schedule(schedule):
     db = get_db()
     db_result = db.execute(
         'SELECT * FROM events WHERE schedule_id = ? ORDER BY start_time',
-        (schedule['id'],)
+        (schedule.get('id'),)
     )
     schedule['events'] = [dict(event) for event in db_result]
 
@@ -48,7 +48,11 @@ def get_schedules():
 
 
 def post_schedule():
-    name = request.get_json(force=True)['name']
+    name = request.get_json(force=True).get('name')
+
+    if name == None:
+        abort(400)
+
     db = get_db()
     schedules = db.execute('INSERT INTO schedules(name) VALUES(?)',(name,))
     db.commit()
@@ -129,14 +133,22 @@ def get_events():
 def post_event():
     request_data = request.get_json(force=True)
 
+    schedule_id = request_data.get('schedule_id')
+    name = request_data.get('name')
+    start_time = request_data.get('start_time')
+    end_time = request_data.get('end_time')
+
+    if name == None or schedule_id == None:
+        abort(400)
+
     db = get_db()
     events = db.execute(
         'INSERT INTO events(schedule_id, name, start_time, end_time) VALUES(?,?,?,?)',
         (
-            request_data['schedule_id'],
-            request_data['name'],
-            request_data['start_time'],
-            request_data['end_time']
+            schedule_id,
+            name,
+            start_time,
+            end_time
         )
     )
     db.commit()
