@@ -129,19 +129,20 @@ def get_events():
 def post_event():
     request_data = request.get_json(force=True)
 
-    name = request_data['name']
-    schedule = request_data['schedule_id']
-
     db = get_db()
     events = db.execute(
-        'INSERT INTO events(schedule_id, name) VALUES(?,?)',
-        (schedule,
-         name)
+        'INSERT INTO events(schedule_id, name, start_time, end_time) VALUES(?,?,?,?)',
+        (
+            request_data['schedule_id'],
+            request_data['name'],
+            request_data['start_time'],
+            request_data['end_time']
+        )
     )
     db.commit()
     close_db()
 
-    return 'Event with name ' + name + ' created'
+    return ('',201)
 
 
 def delete_events():
