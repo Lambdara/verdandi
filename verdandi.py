@@ -27,7 +27,7 @@ def valid_time(time):
 
 
 def valid_date(date):
-    date_regex = re.compile('^\d\d-\d\d-\d\d$')
+    date_regex = re.compile('^\d\d\d\d-\d\d-\d\d$')
     return date_regex.match(date) != None
 
 
@@ -59,13 +59,23 @@ def get_schedules():
 
 
 def post_schedule():
-    name = request.get_json(force=True).get('name')
+    request_data = request.get_json(force=True)
+    name = request_data.get('name')
+    date = request_data.get('date')
 
     if name == None:
         abort(400)
+    if date != None and not valid_date(date):
+        abort(400)
 
     db = get_db()
-    schedules = db.execute('INSERT INTO schedules(name) VALUES(?)',(name,))
+    schedules = db.execute(
+        'INSERT INTO schedules(name,date) VALUES(?,?)',
+        (
+            name,
+            date
+        )
+    )
     db.commit()
     close_db()
     return 'Schedule with name ' + name + ' created'
