@@ -17,14 +17,12 @@
     </h2>
     <table>
       <tr>
-        <th>Id</th>
         <th>Start</th>
         <th>End</th>
         <th>Name</th>
       </tr>
       {% for event in schedule.events %}
       <tr>
-        <td>{{ event.id }}</td>
         <td>{{ event.start_time }}</td>
         <td>{{ event.end_time }}</td>
         <td>{{ event.name }}</td>
