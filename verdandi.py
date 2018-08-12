@@ -14,7 +14,7 @@ def index():
 def add_events_to_schedule(schedule):
     db = get_db()
     db_result = db.execute(
-        'SELECT * FROM events WHERE schedule_id = ?',
+        'SELECT * FROM events WHERE schedule_id = ? ORDER BY start_time',
         (schedule['id'],)
     )
     schedule['events'] = [dict(event) for event in db_result]
