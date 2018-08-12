@@ -6,14 +6,17 @@ Verdandi is a program to make a daily schedule
 
 /Not fully implemented yet/
 
-Communication via JSON.
+The default result is to retun a web page. If the `Accept` header is set to `application/json`, then it will return JSON instead.
+
+- For `GET` and `DELETE` requests headers and body are ignored.
+- For `POST` and `PATCH` the body/data of the request should contain JSON specifying the desired changes.
 
 | Path                       | Description        | Modes              |
 |----------------------------+--------------------+--------------------|
-| `/`                        | Web interface      | GET                |
-| `/schedules/`              | Index of schedules | GET, POST, DELETE  |
+| `/`                        | Web interface root | GET                |
+| `/schedules/`              | List of schedules  | GET, POST, DELETE  |
 | `/schedules/<SCHEDULE_ID>` | Schedule object    | GET, PATCH, DELETE |
-| `/events/`                 | Index of events    | GET, POST, DELETE  |
+| `/events/`                 | List of events     | GET, POST, DELETE  |
 | `/events/<EVENT_ID>`       | Event object       | GET, PATCH, DELETE |
 
 Schedule object:
@@ -22,7 +25,7 @@ Schedule object:
   "id": <SCHEDULE_ID>, # Integer
   "name": <NAME>, # String, this is optional
   "date": <DATE>, # String, this is optional, format: YYYY-MM-DD
-  "event_ids": [<EVENT_ID>,..] # List of integers, referencing event objects
+  "events": [<EVENT>,..] # List of event objects
 }
 ```
 
