@@ -1,6 +1,7 @@
 from db import get_db, close_db
 
 from flask import Flask, request, jsonify, abort, render_template
+import re
 
 
 app = Flask(__name__)
@@ -18,6 +19,16 @@ def add_events_to_schedule(schedule):
         (schedule.get('id'),)
     )
     schedule['events'] = [dict(event) for event in db_result]
+
+
+def valid_time(time):
+    time_regex = re.compile('^\d\d:\d\d$')
+    return time_regex.match(time) != None
+
+
+def valid_date(date):
+    date_regex = re.compile('^\d\d-\d\d-\d\d$')
+    return date_regex.match(date) != None
 
 
 @app.route('/schedules/', methods=['GET', 'POST', 'DELETE'])
@@ -139,6 +150,10 @@ def post_event():
     end_time = request_data.get('end_time')
 
     if name == None or schedule_id == None:
+        abort(400)
+    if start_time != None and not valid_time(start_time):
+        abort(400)
+    if end_time != None and not valid_time(end_time):
         abort(400)
 
     db = get_db()
