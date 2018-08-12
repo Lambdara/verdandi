@@ -1,10 +1,10 @@
 # Verdandi
 
-Verdandi is a program to make a daily schedule
+Verdandi is a program to make a daily schedule implemented in Flask, implementing a REST API.
 
 ## Specification
 
-/Not fully implemented yet/
+*Not fully implemented yet*
 
 The default result is to retun a web page. If the `Accept` header is set to `application/json`, then it will return JSON instead.
 
