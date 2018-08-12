@@ -43,7 +43,7 @@ def manage_schedules():
 
 def get_schedules():
     db = get_db()
-    db_result = db.execute('SELECT * FROM schedules')
+    db_result = db.execute('SELECT * FROM schedules ORDER BY date')
     schedules = [dict(schedule) for schedule in db_result]
     for schedule in schedules:
         add_events_to_schedule(schedule)
