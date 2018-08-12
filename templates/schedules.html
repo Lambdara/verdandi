@@ -9,13 +9,24 @@
     <h1>
       Schedules
     </h1>
-    <ul>
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Name</th>
+      </tr>
       {% for schedule in schedules %}
-      <li>
-        <a href="{{ schedule.id }}">
-          {{ schedule.name }}
-        </a>
-      </li>
+      <tr>
+        <td>
+          <a href="{{ schedule.id }}">
+            {{ schedule.date }}
+          </a>
+        </td>
+        <td>
+          <a href="{{ schedule.id }}">
+            {{ schedule.name }}
+          </a>
+        </td>
+      </tr>
       {% endfor %}
   </body>
 </html>
