@@ -12,7 +12,7 @@ The default result is to retun a web page. If the `Accept` header is set to `app
 - For `POST` and `PATCH` the body/data of the request should contain JSON specifying the desired changes.
 
 | Path                       | Description        | Modes              |
-|----------------------------+--------------------+--------------------|
+| -------------------------- | ------------------ | ------------------ |
 | `/`                        | Web interface root | GET                |
 | `/schedules/`              | List of schedules  | GET, POST, DELETE  |
 | `/schedules/<SCHEDULE_ID>` | Schedule object    | GET, PATCH, DELETE |
