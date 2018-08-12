@@ -63,8 +63,6 @@ def post_schedule():
     name = request_data.get('name')
     date = request_data.get('date')
 
-    if name == None:
-        abort(400)
     if date != None and not valid_date(date):
         abort(400)
 
