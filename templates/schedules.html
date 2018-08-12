@@ -4,6 +4,28 @@
     <title>
       Verdandi - Schedules
     </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      function post_schedule() {
+          var date = document.getElementById('date_input').value;
+          var name = document.getElementById('name_input').value;
+
+          var data = {};
+          if (date != '')
+              data['date'] = date;
+          if (name != '')
+              data['name'] = name;
+
+          $.ajax({
+              type: "POST",
+              url: '',
+              data: JSON.stringify(data),
+              success: function() {
+                  location.reload();
+              }
+          });
+      }
+    </script>
   </head>
   <body>
     <h1>
@@ -29,5 +51,13 @@
       </tr>
       {% endfor %}
     </table>
+    <h2>Add schedule</h2>
+    <form>
+      Date:<br/>
+      <input id="date_input" type="text" name="date" placeholder="YYYY-MM-DD"><br/>
+      Name:<br/>
+      <input id="name_input" type="text" name="name" placeholder="Name"><br/>
+    </form>
+    <button onclick="post_schedule()">Add</button>
   </body>
 </html>
