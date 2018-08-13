@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>
-      Verdandi - Schedules
-    </title>
+    <title>Verdandi - Schedules</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='js/schedules.js') }}"></script>
   </head>
   <body>
-    <h1>
-      Schedules
-    </h1>
+    <h1>Schedules</h1>
     <table>
       <tr>
         <th>Date</th>
@@ -40,7 +36,7 @@
       <input id="date_input" type="text" name="date" placeholder="YYYY-MM-DD"><br/>
       Name:<br/>
       <input id="name_input" type="text" name="name" placeholder="Name"><br/>
+      <button onclick="post_schedule()">Add</button>
     </form>
-    <button onclick="post_schedule()">Add</button>
   </body>
 </html>
