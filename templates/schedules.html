@@ -5,38 +5,7 @@
       Verdandi - Schedules
     </title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript">
-      function post_schedule() {
-          var date = document.getElementById('date_input').value;
-          var name = document.getElementById('name_input').value;
-
-          var data = {};
-          if (date != '')
-              data['date'] = date;
-          if (name != '')
-              data['name'] = name;
-
-          $.ajax({
-              type: "POST",
-              url: '',
-              data: JSON.stringify(data),
-              success: function() {
-                  location.reload();
-              }
-          });
-      }
-
-      function delete_schedule(id) {
-          $.ajax({
-              type: "DELETE",
-              url: id,
-              data: '',
-              success: function() {
-                  location.reload();
-              }
-          });
-      }
-    </script>
+    <script src="{{ url_for('static', filename='js/schedules.js') }}"></script>
   </head>
   <body>
     <h1>
