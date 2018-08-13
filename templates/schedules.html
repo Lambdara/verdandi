@@ -25,6 +25,17 @@
               }
           });
       }
+
+      function delete_schedule(id) {
+          $.ajax({
+              type: "DELETE",
+              url: id,
+              data: '',
+              success: function() {
+                  location.reload();
+              }
+          });
+      }
     </script>
   </head>
   <body>
@@ -47,6 +58,9 @@
           <a href="{{ schedule.id }}">
             {{ schedule.name }}
           </a>
+        </td>
+        <td>
+          <button onclick="delete_schedule({{ schedule.id }})">Delete</button>
         </td>
       </tr>
       {% endfor %}
