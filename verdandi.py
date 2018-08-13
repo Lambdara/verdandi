@@ -76,7 +76,7 @@ def post_schedule():
     )
     db.commit()
     close_db()
-    return 'Schedule with name ' + name + ' created'
+    return ('', 201)
 
 
 def delete_schedules():
