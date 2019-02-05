@@ -14,12 +14,14 @@
         <th>Start</th>
         <th>End</th>
         <th>Name</th>
+        <th></th>
       </tr>
       {% for event in schedule.events %}
       <tr>
         <td>{{ event.start_time }}</td>
         <td>{{ event.end_time }}</td>
         <td>{{ event.name }}</td>
+        <td><button onclick="delete_event({{ event.id }})">delete</button></td>
       </tr>
       {% endfor %}
     </table>

@@ -24,6 +24,13 @@ function post_event(schedule_id) {
     });
 }
 
+function delete_event(event_id) {
+    $.ajax({
+        type: 'DELETE',
+        url: window.location.origin + '/events/' + event_id
+    })
+}
+
 $(document).ajaxStop(function(){
     window.location.reload();
 });
