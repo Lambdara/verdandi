@@ -2,6 +2,8 @@
 <html>
   <head>
     <title>Verdandi - Schedule {{ schedule.name }}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/schedule.js') }}"></script>
   </head>
   <body>
     <h1>Schedule: {{ schedule.name }}</h1>
@@ -21,5 +23,13 @@
       </tr>
       {% endfor %}
     </table>
+    <h2>Add event</h2>
+    Name:<br/>
+    <input id="name_input" type="text" name="date" placeholder="Name"><br/>
+    Start time:<br/>
+    <input id="start_time_input" type="text" name="start_time" placeholder="HH:MM"><br/>
+    End time:<br/>
+    <input id="end_time_input" type="text" name="end_time" placeholder="HH:MM"><br/>
+    <button onclick="post_event({{ schedule.id }})">Add</button>
   </body>
 </html>

@@ -158,11 +158,11 @@ def post_event():
     end_time = request_data.get('end_time')
 
     if name == None or schedule_id == None:
-        abort(400)
+        return ('Missing name or schedule_id', 400)
     if start_time != None and not valid_time(start_time):
-        abort(400)
+        return ('Invalid start time', 400)
     if end_time != None and not valid_time(end_time):
-        abort(400)
+        return ('Invalid end time', 400)
 
     db = get_db()
     events = db.execute(
